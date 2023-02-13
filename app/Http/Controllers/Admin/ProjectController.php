@@ -89,7 +89,9 @@ class ProjectController extends Controller
             abort(404, "Ritenta");
         }
 
-        return view("admin.project.edit", compact("project"));
+        $technologies = Technology::all();
+
+        return view("admin.project.edit", compact("project", "technologies"));
     }
 
     /**
@@ -119,7 +121,9 @@ class ProjectController extends Controller
             "cover_img" => $path ?? $project->cover_img
         ]);
 
-        return redirect()->route("admin.projects.show", $project->id);
+        $project->technologies()->sync($data["technologies"]);
+
+        return redirect()->route("admin.projects.show", compact("project"));
     }
 
     /**
