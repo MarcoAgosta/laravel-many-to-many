@@ -141,6 +141,7 @@ class ProjectController extends Controller
             Storage::disk('public')->delete($project->cover_img);
         }
 
+        $project->technologies()->detach();
         $project->delete();
 
         return redirect()->route("admin.projects.index");
