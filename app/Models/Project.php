@@ -11,4 +11,8 @@ class Project extends Model
     protected $fillable=[
         "name", "description", "cover_img", "github_link"
     ];
+
+    public function technologies(){
+        return $this->belongsToMany(Technology::class);
+    }
 }
