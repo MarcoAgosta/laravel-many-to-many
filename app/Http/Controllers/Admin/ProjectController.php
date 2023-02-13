@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -29,7 +30,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view("admin.project.create");
+        $technologies = Technology::all();
+
+        return view("admin.project.create", compact("technologies"));
     }
 
     /**
@@ -41,15 +44,21 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
+        
 
-        $path=Storage::disk('public')->put("projects", $data["cover_img"]);
+        
     
         $project=new Project();
         $project->name=$data["name"];
         $project->description=$data["description"];
-        $project->cover_img=$path;
         $project->github_link=$data["github_link"];
         $project->save();
+
+        
+
+        if ($request->has("technologies")) {
+            $project->technologies()->attach($data["technologies"]);
+        }
 
         return redirect()->route("admin.projects.show", $project->id);
     }

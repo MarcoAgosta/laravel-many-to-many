@@ -30,6 +30,17 @@
                             <input type="text" class="form-control" name="github_link">
                         </div>
 
+                        @foreach ($technologies as $technology)
+                          <div class="form-check form-check-inline">
+                            
+                            <input class="form-check-input" type="checkbox"
+                              id="technologyCheckbox_{{ $loop->index }}" value="{{ $technology->id }}" name="technologies[]"
+                              {{ in_array( $technology->id, old('technologies', [])) ? 'checked' : '' }}
+                              >
+                            <label class="form-check-label" for="technologyCheckbox_{{ $loop->index }}">{{ $technology->tecnologia }}</label>
+                          </div>
+                        @endforeach
+
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>   
                 </div>

@@ -16,6 +16,12 @@
                     
                     <a>{{$project->github_link}}</a>
 
+                    <div class="card-title">Tecnologie scelte:
+                      @foreach ($project->technologies as $technology)
+                        <span class="badge rounded-pill text-bg-primary">{{ $technology->tecnologia }}</span>
+                      @endforeach
+                    </div>
+
                     <div class="d-flex align-items-center"> 
                         <a href="{{route('admin.projects.edit', $project->id)}}" class="p-3">Modifica</a>
          
